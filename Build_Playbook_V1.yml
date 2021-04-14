@@ -37,7 +37,7 @@
       Filter_Name: "{{ item.Filter_Name }}"
     loop: "{{ Filters }}"
     
-  - name: Creating Filter Entries...
+  - name: Creating multi-port Filter Entries...
     include_role:
       name: CreateFilterEntry
     vars:
@@ -45,10 +45,26 @@
       FilterEntry_Protocol: "{{ item.FilterEntry_Protocol }}"
       FilterEntry_Name: "{{ item.FilterEntry_Name }}"
       FilterEntry_Ethertype: "{{ item.FilterEntry_Ethertype }}"
-      FilterEntry_DSTPort: "{{ item.FilterEntry_DSTPort }}"
+      FilterEntry_DSTPort_Start: "{{ item.FilterEntry_DSTPort_Start }}"
+      FilterEntry_DSTPort_End: "{{ item.FilterEntry_DSTPort_End }}"
       Filter_Name: "{{ item.Filter_Name }}"
       FilterEntry_Description: "{{ item.FilterEntry_Description }}"
     loop: "{{ FilterEntries }}"
+    when: item.FilterEntry_DSTPort_End is defined
+
+  - name: Creating single-port Filter Entries...
+    include_role:
+      name: CreateFilterEntry
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      FilterEntry_Protocol: "{{ item.FilterEntry_Protocol }}"
+      FilterEntry_Name: "{{ item.FilterEntry_Name }}"
+      FilterEntry_Ethertype: "{{ item.FilterEntry_Ethertype }}"
+      FilterEntry_DSTPort_Start: "{{ item.FilterEntry_DSTPort_Start }}"
+      Filter_Name: "{{ item.Filter_Name }}"
+      FilterEntry_Description: "{{ item.FilterEntry_Description }}"
+    loop: "{{ FilterEntries }}"
+    when: item.FilterEntry_DSTPort_End is undefined
     
   - name: Creating Bridge Domains...
     include_role:

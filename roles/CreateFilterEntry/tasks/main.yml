@@ -9,6 +9,21 @@
     entry: "{{ FilterEntry_Name }}"
   register: my_FilterEntry
 
+# - name: Create Filter Entry "{{ FilterEntry_Name }}"
+#   aci_filter_entry:
+#     host: "{{ aci_host }}"
+#     username: "{{ aci_username }}"
+#     password: "{{ aci_password }}"
+#     validate_certs: no
+#     state: present
+#     ip_protocol: "{{ FilterEntry_Protocol }}"
+#     entry: "{{ FilterEntry_Name }}"
+#     ether_type: "{{ FilterEntry_Ethertype }}"
+#     tenant: "{{ Tenant_Name }}"
+#     dst_port: "{{ FilterEntry_DSTPort }}"
+#     filter: "{{ Filter_Name }}"
+#     descr: "{{ FilterEntry_Description }}"
+#   when: my_FilterEntry.current == []
 - name: Create Filter Entry "{{ FilterEntry_Name }}"
   aci_filter_entry:
     host: "{{ aci_host }}"
@@ -20,7 +35,28 @@
     entry: "{{ FilterEntry_Name }}"
     ether_type: "{{ FilterEntry_Ethertype }}"
     tenant: "{{ Tenant_Name }}"
-    dst_port: "{{ FilterEntry_DSTPort }}"
+    dst_port_start: "{{ FilterEntry_DSTPort_Start }}"
+    dst_port_end: "{{ FilterEntry_DSTPort_End }}"
     filter: "{{ Filter_Name }}"
     descr: "{{ FilterEntry_Description }}"
-  when: my_FilterEntry.current == []
+  when: 
+    - FilterEntry_DSTPort_End is defined
+    - my_FilterEntry.current == []
+
+- name: Create Single Port Filter Entry "{{ FilterEntry_Name }}"
+  aci_filter_entry:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    state: present
+    ip_protocol: "{{ FilterEntry_Protocol }}"
+    entry: "{{ FilterEntry_Name }}"
+    ether_type: "{{ FilterEntry_Ethertype }}"
+    tenant: "{{ Tenant_Name }}"
+    dst_port: "{{ FilterEntry_DSTPort_Start }}"
+    filter: "{{ Filter_Name }}"
+    descr: "{{ FilterEntry_Description }}"
+  when: 
+    - FilterEntry_DSTPort_End is undefined
+    - my_FilterEntry.current == []

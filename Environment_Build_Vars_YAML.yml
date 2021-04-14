@@ -24,42 +24,38 @@ Filters:
 FilterEntries: 
   - FilterEntry_Name: FLTe-PatchManagement-TCP80
     FilterEntry_Description: Patch Management TCP 80
-    FilterEntry_SinglePort: true
     FilterEntry_Ethertype: ip
     FilterEntry_Protocol: tcp
-    FilterEntry_DSTPort: 80
+    FilterEntry_DSTPort_Start: 80
     Tenant_Name: 000_dsp_2021
     Filter_Name: FLT-PatchManagement
   - FilterEntry_Name: FLTe-PatchManagement-TCP443
     FilterEntry_Description: Patch Management TCP 443
-    FilterEntry_SinglePort: true
     FilterEntry_Ethertype: ip
     FilterEntry_Protocol: tcp
-    FilterEntry_DSTPort: 443
+    FilterEntry_DSTPort_Start: 443
     Tenant_Name: 000_dsp_2021
     Filter_Name: FLT-PatchManagement
   - FilterEntry_Name: FLTe-AntiVirus-TCP80
     FilterEntry_Description: Patch Management TCP 80
-    FilterEntry_SinglePort: true
     FilterEntry_Ethertype: ip
     FilterEntry_Protocol: tcp
-    FilterEntry_DSTPort: 80
+    FilterEntry_DSTPort_Start: 80
     Tenant_Name: 000_dsp_2021
     Filter_Name: FLT-AntiVirus
   - FilterEntry_Name: FLTe-AntiVirus-TCP443
     FilterEntry_Description: Patch Management TCP 443
-    FilterEntry_SinglePort: true
     FilterEntry_Ethertype: ip
     FilterEntry_Protocol: tcp
-    FilterEntry_DSTPort: 443
+    FilterEntry_DSTPort_Start: 443
     Tenant_Name: 000_dsp_2021
     Filter_Name: FLT-AntiVirus
-  - FilterEntry_Name: FLTe-SNMP-UDP161
-    FilterEntry_Description: SNMP UDP 161
-    FilterEntry_SinglePort: true
+  - FilterEntry_Name: FLTe-SNMP-UDP161-162
+    FilterEntry_Description: SNMP UDP 161+162
     FilterEntry_Ethertype: ip
     FilterEntry_Protocol: udp
-    FilterEntry_DSTPort: 161
+    FilterEntry_DSTPort_Start: 161
+    FilterEntry_DSTPort_End: 162
     Tenant_Name: 000_dsp_2021
     Filter_Name: FLT-Monitoring
     
