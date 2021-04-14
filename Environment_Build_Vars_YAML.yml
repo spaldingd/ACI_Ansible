@@ -1,0 +1,146 @@
+Tenants: 
+  - Tenant_Name: 000_dsp_2021
+    Tenant_Description: Test Tenant Created With Ansible
+
+VRFs: 
+  - VRF_Name: VRF-Prod
+    VRF_Description: Test VRF Created with Ansible
+    Tenant_Name: 000_dsp_2021 
+
+Filters: 
+  - Filter_Name: FLT-PatchManagement
+    Filter_Description: PatchManagement Filter
+    Tenant_Name: 000_dsp_2021
+  - Filter_Name: FLT-AntiVirus
+    Filter_Description: AntiVirus Filter
+    Tenant_Name: 000_dsp_2021
+  - Filter_Name: FLT-ActiveDirectory
+    Filter_Description: ActiveDirectory Filter
+    Tenant_Name: 000_dsp_2021
+  - Filter_Name: FLT-Monitoring
+    Filter_Description: Monitoring Filter
+    Tenant_Name: 000_dsp_2021
+
+FilterEntries: 
+  - FilterEntry_Name: FLTe-PatchManagement-TCP80
+    FilterEntry_Description: Patch Management TCP 80
+    FilterEntry_SinglePort: true
+    FilterEntry_Ethertype: ip
+    FilterEntry_Protocol: tcp
+    FilterEntry_DSTPort: 80
+    Tenant_Name: 000_dsp_2021
+    Filter_Name: FLT-PatchManagement
+  - FilterEntry_Name: FLTe-PatchManagement-TCP443
+    FilterEntry_Description: Patch Management TCP 443
+    FilterEntry_SinglePort: true
+    FilterEntry_Ethertype: ip
+    FilterEntry_Protocol: tcp
+    FilterEntry_DSTPort: 443
+    Tenant_Name: 000_dsp_2021
+    Filter_Name: FLT-PatchManagement
+  - FilterEntry_Name: FLTe-AntiVirus-TCP80
+    FilterEntry_Description: Patch Management TCP 80
+    FilterEntry_SinglePort: true
+    FilterEntry_Ethertype: ip
+    FilterEntry_Protocol: tcp
+    FilterEntry_DSTPort: 80
+    Tenant_Name: 000_dsp_2021
+    Filter_Name: FLT-AntiVirus
+  - FilterEntry_Name: FLTe-AntiVirus-TCP443
+    FilterEntry_Description: Patch Management TCP 443
+    FilterEntry_SinglePort: true
+    FilterEntry_Ethertype: ip
+    FilterEntry_Protocol: tcp
+    FilterEntry_DSTPort: 443
+    Tenant_Name: 000_dsp_2021
+    Filter_Name: FLT-AntiVirus
+  - FilterEntry_Name: FLTe-SNMP-UDP161
+    FilterEntry_Description: SNMP UDP 161
+    FilterEntry_SinglePort: true
+    FilterEntry_Ethertype: ip
+    FilterEntry_Protocol: udp
+    FilterEntry_DSTPort: 161
+    Tenant_Name: 000_dsp_2021
+    Filter_Name: FLT-Monitoring
+    
+    
+
+BridgeDomains: 
+  - BridgeDomain_Name: BD-PatchManagement
+    Tenant_Name: 000_dsp_2021
+    VRF_Name: VRF-Prod 
+  - BridgeDomain_Name: BD-AntiVirus
+    Tenant_Name: 000_dsp_2021
+    VRF_Name: VRF-Prod 
+  - BridgeDomain_Name: BD-ActiveDirectory
+    Tenant_Name: 000_dsp_2021
+    VRF_Name: VRF-Prod 
+  - BridgeDomain_Name: BD-Monitoring
+    Tenant_Name: 000_dsp_2021
+    VRF_Name: VRF-Prod 
+
+Subnets: 
+  - Subnet_Name: SN_10.10.1.0m24
+    Subnet_Description: Subnet Patch Management
+    BridgeDomain_Name: BD-PatchManagement
+    Subnet_Gateway: 10.10.1.1
+    Subnet_Netmask: 24
+    Subnet_Scope: public
+    Tenant_Name: 000_dsp_2021 
+  - Subnet_Name: SN_10.10.2.0m24
+    Subnet_Description: Subnet Anti Virus
+    BridgeDomain_Name: BD-AntiVirus
+    Subnet_Gateway: 10.10.2.1
+    Subnet_Netmask: 24
+    Subnet_Scope: public
+    Tenant_Name: 000_dsp_2021 
+  - Subnet_Name: SN_10.10.3.0m24
+    Subnet_Description: Subnet Active Directory
+    BridgeDomain_Name: BD-ActiveDirectory
+    Subnet_Gateway: 10.10.3.1
+    Subnet_Netmask: 24
+    Subnet_Scope: public
+    Tenant_Name: 000_dsp_2021 
+  - Subnet_Name: SN_10.10.4.0m24
+    Subnet_Description: Subnet Monitoring
+    BridgeDomain_Name: BD-Monitoring
+    Subnet_Gateway: 10.10.4.1
+    Subnet_Netmask: 24
+    Subnet_Scope: public
+    Tenant_Name: 000_dsp_2021 
+
+ApplicationProfiles: 
+  - ApplicationProfile_Name: AP-PatchManagement
+    ApplicationProfile_Description: Application Profile Patch Management
+    Tenant_Name: 000_dsp_2021 
+  - ApplicationProfile_Name: AP-AntiVirus
+    ApplicationProfile_Description: Application Profile AntiVirus
+    Tenant_Name: 000_dsp_2021 
+  - ApplicationProfile_Name: AP-ActiveDirectory
+    ApplicationProfile_Description: Application Profile Active Directory
+    Tenant_Name: 000_dsp_2021 
+  - ApplicationProfile_Name: AP-Monitoring
+    ApplicationProfile_Description: Application Profile Monitoring
+    Tenant_Name: 000_dsp_2021 
+
+EPGs: 
+  - EPG_Name: EPG-PatchManagement
+    EPG_Description: EPG Patch Management
+    BridgeDomain_Name: BD-PatchManagement
+    ApplicationProfile_Name: AP-PatchManagement
+    Tenant_Name: 000_dsp_2021 
+  - EPG_Name: EPG-AntiVirus
+    EPG_Description: EPG AntiVirus
+    BridgeDomain_Name: BD-AntiVirus
+    ApplicationProfile_Name: AP-AntiVirus
+    Tenant_Name: 000_dsp_2021 
+  - EPG_Name: EPG-ActiveDirectory
+    EPG_Description: EPG ActiveDirectory
+    BridgeDomain_Name: BD-ActiveDirectory
+    ApplicationProfile_Name: AP-ActiveDirectory
+    Tenant_Name: 000_dsp_2021 
+  - EPG_Name: EPG-Monitoring
+    EPG_Description: EPG Monitoring
+    BridgeDomain_Name: BD-Monitoring
+    ApplicationProfile_Name: AP-Monitoring
+    Tenant_Name: 000_dsp_2021 

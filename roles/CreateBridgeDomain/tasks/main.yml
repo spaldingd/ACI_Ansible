@@ -1,0 +1,23 @@
+---
+- name: Query Bridge Domain "{{ BridgeDomain_Name }}"
+  aci_bd:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    tenant: "{{ Tenant_Name }}"
+    bd: "{{ BridgeDomain_Name }}"
+    state: query
+  register: my_BridgeDomain
+
+- name: Create Bridge Domain "{{ BridgeDomain_Name }}"
+  aci_bd:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    tenant: "{{ Tenant_Name }}"
+    bd: "{{ BridgeDomain_Name }}"
+    vrf: VRF_Name
+    state: present
+  when: my_BridgeDomain.current == []

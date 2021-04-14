@@ -1,0 +1,31 @@
+---
+- name: Query a subnet "{{ Subnet_Name }}"
+  aci_bd_subnet:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    #tenant: "{{ Tenant_Name }}"
+    gateway: "{{ Subnet_Gateway }}"
+    mask: "{{ Subnet_Netmask }}"
+    #bd: "{{ BridgeDomain_Name }}"
+    #subnet_name: "{{ Subnet_Name }}"
+    state: query
+  register: my_Subnet
+
+
+- name: Create a subnet "{{ Subnet_Name }}"
+  aci_bd_subnet:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    tenant: "{{ Tenant_Name }}"
+    subnet_name: "{{ Subnet_Name }}"
+    description: "{{ Subnet_Description }}"
+    bd: "{{ BridgeDomain_Name }}"
+    gateway: "{{ Subnet_Gateway }}"
+    mask: "{{ Subnet_Netmask }}"
+    scope: "{{ Subnet_Scope }}"
+    state: present
+  when: my_Subnet.current == []

@@ -1,0 +1,24 @@
+---
+- name: Query EPG "{{ EPG_Name }}"
+  aci_epg:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    epg: "{{ EPG_Name }}"
+    state: query
+  register: my_EPG
+
+- name: Create EPG "{{ EPG_Name }}"
+  aci_epg:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    tenant: "{{ Tenant_Name }}"
+    ap: "{{ ApplicationProfile_Name }}"
+    epg: "{{ EPG_Name }}"
+    bd: "{{ BridgeDomain_Name }}"
+    description: "{{ EPG_Description }}"
+    state: present
+  when: my_EPG.current == []

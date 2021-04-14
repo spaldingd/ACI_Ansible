@@ -1,0 +1,78 @@
+---
+- name: PLAY 1
+  hosts: ACI
+  any_errors_fatal: true
+  connection: local
+  gather_facts: no
+  vars:
+    aci_host: sandboxapicdc.cisco.com
+    aci_username: admin
+    aci_password: ciscopsdt
+    tenants:
+    - Tenant_Name: 000_dsp_2021
+      Tenant_Description: Tenant0 created by Ansible via role.
+    - Tenant_Name: 001_dsp_2021
+      Tenant_Description: Tenant1 created by Ansible via role.
+    - Tenant_Name: 002_dsp_2021
+      Tenant_Description: Tenant2 created by Ansible via role.
+    - Tenant_Name: 003_dsp_2021
+      Tenant_Description: Tenant3 created by Ansible via role.
+    # Tenant Vars
+    # Tenant_Name: 000_dsp_2020
+    # Tenant_Description: Tenant created by Ansible via role.
+    # VRF Vars
+    VRF_Name: VRF-Prod
+    VRF_Description: VRF created by Ansible via role.
+    # Filter Vars
+    Filter_Name: Filter1
+    Filter_Description: Filter1 Description
+    # Filter Entry Vars
+    FilterEntry_Name: FLTe_SNMP
+    FilterEntry_Description: UDP Port 161 for SNMP
+    FilterEntry_Ethertype: ip
+    FilterEntry_Protocol: udp
+    FilterEntry_DSTPort: "161"
+    # Application Profile Vars
+    ApplicationProfile_Name: app1
+    ApplicationProfile_Description: app1 desc
+    #Bridge Domain Vars
+    BridgeDomain_Name: brige1
+    # EPG Vars
+    EPG_Name: epg1
+    EPG_Description: epg1 desc
+    # Subnet Vars
+    Subnet_Name: sub1
+    Subnet_Description: sub1 desc
+    Subnet_Scope: public
+    Subnet_Gateway: 10.0.0.254
+    Subnet_Netmask: 24
+  roles:
+    - CreateTenant
+      tenants: "{{ tenants }}"
+      # - CreateVRF
+      # - CreateFilter
+      # - CreateFilterEntry
+      # - CreateBridgeDomain
+      # - CreateSubnet
+      # - CreateApplicationProfile
+      # - CreateEPG
+  # tasks:
+  #   - name: Import Vars.
+  #     include_vars:
+  #       file: tenantVars.yml
+  #       name: tenants
+  #   - name: Create tenants.
+  #     aci_tenant:
+  #       host: "{{ aci_host }}"
+  #       username: "{{ aci_username }}"
+  #       password: "{{ aci_password }}"
+  #       validate_certs: no
+  #       tenant: "{{ tenant.Tenant_Name }}"
+  #       description: "{{ tenant.Tenant_Description }}"
+  #       state: present
+  #     loop: "{{ tenants }}"
+  #     loop_control:
+  #       loop_var: tenant
+
+
+

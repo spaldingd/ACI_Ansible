@@ -1,0 +1,93 @@
+---
+- name: PLAY 1
+  hosts: ACI
+  # any_errors_fatal: true
+  connection: local
+  gather_facts: no
+  vars:
+    aci_host: sandboxapicdc.cisco.com
+    aci_username: admin
+    aci_password: ciscopsdt
+  vars_files:
+    - Environment_Build_Vars_YAML.yml
+  tasks:
+  - name: Creating Tenants...
+    include_role:
+      name: CreateTenant
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      Tenant_Description: "{{ item.Tenant_Description }}"
+    loop: "{{ Tenants }}"
+
+  - name: Creating VRF's...
+    include_role:
+      name: CreateVRF
+    vars:
+      VRF_Name: "{{ item.VRF_Name }}"
+      VRF_Description: "{{ item.VRF_Description }}"
+      Tenant_Name: "{{ item.Tenant_Name }}"
+    loop: "{{ VRFs }}"
+    
+  - name: Creating Filters...
+    include_role:
+      name: CreateFilter
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      Filter_Description: "{{ item.Filter_Description }}"
+      Filter_Name: "{{ item.Filter_Name }}"
+    loop: "{{ Filters }}"
+    
+  - name: Creating Filter Entries...
+    include_role:
+      name: CreateFilterEntry
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      FilterEntry_Protocol: "{{ item.FilterEntry_Protocol }}"
+      FilterEntry_Name: "{{ item.FilterEntry_Name }}"
+      FilterEntry_Ethertype: "{{ item.FilterEntry_Ethertype }}"
+      FilterEntry_DSTPort: "{{ item.FilterEntry_DSTPort }}"
+      Filter_Name: "{{ item.Filter_Name }}"
+      FilterEntry_Description: "{{ item.FilterEntry_Description }}"
+    loop: "{{ FilterEntries }}"
+    
+  - name: Creating Bridge Domains...
+    include_role:
+      name: CreateBridgeDomain
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      BridgeDomain_Name: "{{ item.BridgeDomain_Name }}"
+      VRF_Name: "{{ item.VRF_Name }}"
+    loop: "{{ BridgeDomains }}"
+    
+  - name: Creating Subnets...
+    include_role:
+      name: CreateSubnet
+    vars:
+      Subnet_Name: "{{ item.Subnet_Name }}"
+      BridgeDomain_Name: "{{ item.BridgeDomain_Name }}"
+      Subnet_Gateway: "{{ item.Subnet_Gateway }}"
+      Subnet_Netmask: "{{ item.Subnet_Netmask }}"
+      Subnet_Scope: "{{ item.Subnet_Scope }}"
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      Subnet_Description: "{{ item.Subnet_Description }}"
+    loop: "{{ Subnets }}"
+    
+  - name: Creating Application Profiles...
+    include_role:
+      name: CreateApplicationProfile
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      ApplicationProfile_Name: "{{ item.ApplicationProfile_Name }}"
+      ApplicationProfile_Description: "{{ item.ApplicationProfile_Description }}"
+    loop: "{{ ApplicationProfiles }}"
+    
+  - name: Creating EPGs...
+    include_role:
+      name: CreateEPG
+    vars:
+      Tenant_Name: "{{ item.Tenant_Name }}"
+      EPG_Name: "{{ item.EPG_Name }}"
+      EPG_Description: "{{ item.EPG_Description }}"
+      BridgeDomain_Name: "{{ item.BridgeDomain_Name }}"
+      ApplicationProfile_Name: "{{ item.ApplicationProfile_Name }}"
+    loop: "{{ EPGs }}"

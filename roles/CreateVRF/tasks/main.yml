@@ -1,0 +1,28 @@
+---
+- name: Query existance of "{{ VRF_Name }}".
+  aci_vrf:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    vrf: "{{ VRF_Name }}"
+    tenant: "{{ Tenant_Name }}"
+    descr: "{{ VRF_Description }}"
+    policy_control_preference: enforced
+    policy_control_direction: ingress
+    state: query
+  register: my_VRF
+  
+- name: Add a new VRF ("{{ VRF_Name }}") to tenant ("{{ Tenant_Name }}").
+  aci_vrf:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    vrf: "{{ VRF_Name }}"
+    tenant: "{{ Tenant_Name }}"
+    descr: "{{ VRF_Description }}"
+    policy_control_preference: enforced
+    policy_control_direction: ingress
+    state: present
+  when: my_VRF.current == []

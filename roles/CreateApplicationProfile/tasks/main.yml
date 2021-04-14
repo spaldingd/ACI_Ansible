@@ -1,0 +1,22 @@
+---
+- name: Query Application Profile "{{ ApplicationProfile_Name }}"
+  aci_ap:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    ap: "{{ ApplicationProfile_Name }}"
+    state: query
+  register: my_ApplicationProfile
+
+- name: Create Application Profile "{{ ApplicationProfile_Name }}"
+  aci_ap:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    tenant: "{{ Tenant_Name }}"
+    ap: "{{ ApplicationProfile_Name }}"
+    description: "{{ ApplicationProfile_Description }}"
+    state: present
+  when: my_ApplicationProfile.current == []

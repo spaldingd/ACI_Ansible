@@ -1,0 +1,23 @@
+---
+- name: Query Filter "{{ Filter_Name }}"
+  aci_filter:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    filter: "{{ Filter_Name }}"
+    tenant: "{{ Tenant_Name }}"
+    state: query
+  register: my_Filter
+
+- name: Create Filter "{{ Filter_Name }}"
+  aci_filter:
+    host: "{{ aci_host }}"
+    username: "{{ aci_username }}"
+    password: "{{ aci_password }}"
+    validate_certs: no
+    filter: "{{ Filter_Name }}"
+    description: "{{ Filter_Description }}"
+    tenant: "{{ Tenant_Name }}"
+    state: present
+  when: my_Filter.current == []
